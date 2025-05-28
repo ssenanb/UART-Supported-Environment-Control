@@ -48,7 +48,6 @@ Jumper Cables
   LED OFF -> The LED turns off.
 
 All of the stages display in the LCD screen.
- <img src="https://raw.githubusercontent.com/ssenanb/Environment-Reaction-System/main/configuration.png" alt="System Configuration" width="500"/>
 
 Figure 1 : System photo
 
