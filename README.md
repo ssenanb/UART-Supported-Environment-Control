@@ -65,6 +65,51 @@ Fİgure 4 : In the Termite
 
 <img src="https://github.com/ssenanb/UART-Supported-Environment-Control/blob/main/termite_display.png" alt="Termite" width="500"/>
 
+-> Pin Configuration 
 
+<img src="https://github.com/ssenanb/UART-Supported-Environment-Control/blob/main/configuration.png" alt="Termite" width="500"/>
+
+
+PA0 -> ADC_IN0 -> IR Distance Sensor
+
+PA1 -> GPIO_Output -> DHT11 Sensor
+
+PA9 -> USART1_TX (with Interrupts)
+
+PA10 -> USART1_RX (with Interrupts)
+
+PB3 -> TIM2_CH2 -> DC Motor ENA
+
+PB4 -> GPIO_Output -> DC Motor IN1
+
+PB5 -> GPIO_Output -> DC Motor IN2
+
+DC Motor VCC -> Battery VCC
+
+DC Motor GND -> Battery GND & Board
+
+PB6 -> I2C_SCL -> LCD
+
+PB7 -> I2C_SDA -> LCD
+
+PD2 -> GPIO_OUTPUT -> LED
+
+I2C LCD VCC -> Arduino UNO 5V
+
+I2C LCD -> GND -> Arduino Uno GND & Board
+
+STM32F0DISC -> 5V -> Board
+
+STM32F0DISC -> GND -> Board
+
+All the GNDs are connected.
+
+CONCLUSION: I used Arduino Uno due to I2C LCD did not enough to power from STM32F0DISC when it's VCC attaching the cable to STM32F0DISC and I connected a 5V adaptor to power to Arduino UNO.
+
+I used these library : 
+
+For the LCD :  https://github.com/alixahedi/i2c-lcd-stm32
+
+For the DHT11 : https://github.com/quen0n/DHT11-DHT22-STM32-HAL
 
 
