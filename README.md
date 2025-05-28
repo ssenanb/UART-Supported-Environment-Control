@@ -26,6 +26,8 @@ UART Module
 
 16x2 I2C LCD 
 
+Arduino Uno (used only as power source for LCD)
+
 Jumper Cables
 
 
@@ -33,11 +35,11 @@ Jumper Cables
 
 * Automatic Mode : If the temperature is higher than the threshold, the fan turns on and if the distance is smaller than the threshold, the LED turns on. All of the status display in the LCD screen.
   
-* Manuel Mode : If you send the 'MANUAL' command via UART, the system switches to manual mode. All of the command in the below :
+* Manual Mode : If you send the 'MANUAL' command via UART, the system switches to manual mode. All of the command in the below :
 
   AUTO -> The system switches to automatic mode again. (Auto Mode' is printed to the Termite terminal via UART.)
   
-  MANUEL -> The system switches to manuel mode. (Manuel Mode' is printed to the Termite terminal via UART)
+  MANUAL -> The system switches to manual mode. (Manual Mode' is printed to the Termite terminal via UART)
 
   FAN ON -> The fan turns on.
 
@@ -49,7 +51,7 @@ Jumper Cables
 
 All of the stages display in the LCD screen.
 
-Figure 1 : System photo
+Figure 1 : System Overview
 
 <img src="https://github.com/ssenanb/UART-Supported-Environment-Control/blob/main/system_installation.jpeg" alt="System Configuration" width="500"/>
 
@@ -57,11 +59,11 @@ Figure 2 : Automatic Mode
 
 <img src="https://github.com/ssenanb/UART-Supported-Environment-Control/blob/main/auto_mode.jpeg" alt="Auto Mode" width="500"/>
 
-Figure 3 : Manuel Mode
+Figure 3 : Manual Mode
 
 <img src="https://github.com/ssenanb/UART-Supported-Environment-Control/blob/main/manuel_mode.jpeg" alt="Manuel Mode" width="500"/>
 
-Fİgure 4 : In the Termite
+Fİgure 4 : UART Output (Termite)
 
 <img src="https://github.com/ssenanb/UART-Supported-Environment-Control/blob/main/termite_display.png" alt="Termite" width="500"/>
 
@@ -74,9 +76,9 @@ PA0 -> ADC_IN0 -> IR Distance Sensor
 
 PA1 -> GPIO_Output -> DHT11 Sensor
 
-PA9 -> USART1_TX (with Interrupts)
+PA9 -> USART1_TX (with Interrupt)
 
-PA10 -> USART1_RX (with Interrupts)
+PA10 -> USART1_RX (with Interrupt)
 
 PB3 -> TIM2_CH2 -> DC Motor ENA
 
@@ -104,7 +106,8 @@ STM32F0DISC -> GND -> Board
 
 All the GNDs are connected.
 
-CONCLUSION: I used Arduino Uno due to I2C LCD did not enough to power from STM32F0DISC when it's VCC attaching the cable to STM32F0DISC and I connected a 5V adaptor to power to Arduino UNO.
+NOTE : The STM32F0DISCOVERY board could not supply sufficient current to the I2C LCD.
+Therefore, I powered the LCD using Arduino Uno’s 5V pin and connected common GND between all devices.
 
 I used these library : 
 
