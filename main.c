@@ -1,57 +1,15 @@
-/* USER CODE BEGIN Header */
-/**
-  ******************************************************************************
-  * @file           : main.c
-  * @brief          : Main program body
-  ******************************************************************************
-  * @attention
-  *
-  * Copyright (c) 2025 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
-/* USER CODE END Header */
-/* Includes ------------------------------------------------------------------*/
 #include "main.h"
-
-/* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */
 #include "DHT.h"
 #include "i2c_lcd.h"
 #include "stdio.h"
 #include "string.h"
-/* USER CODE END Includes */
 
-/* Private typedef -----------------------------------------------------------*/
-/* USER CODE BEGIN PTD */
-
-/* USER CODE END PTD */
-
-/* Private define ------------------------------------------------------------*/
-/* USER CODE BEGIN PD */
-
-/* USER CODE END PD */
-
-/* Private macro -------------------------------------------------------------*/
-/* USER CODE BEGIN PM */
-
-/* USER CODE END PM */
-
-/* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc;
-
 I2C_HandleTypeDef hi2c1;
-
 TIM_HandleTypeDef htim2;
-
 UART_HandleTypeDef huart1;
 
-/* USER CODE BEGIN PV */
+
 I2C_LCD_HandleTypeDef lcd;
 
 uint16_t ir_value;
@@ -123,62 +81,29 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 			}
 		memset(rxBuffer, 0, sizeof(rxBuffer));
 		}
-	  }
+	    }
 	}
 	HAL_UART_Receive_IT(&huart1, (uint8_t *)&rxChar, 1);
 }
-/* USER CODE END PV */
 
-/* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_ADC_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_USART1_UART_Init(void);
-/* USER CODE BEGIN PFP */
 
-/* USER CODE END PFP */
-
-/* Private user code ---------------------------------------------------------*/
-/* USER CODE BEGIN 0 */
-
-/* USER CODE END 0 */
-
-/**
-  * @brief  The application entry point.
-  * @retval int3
-  */
 int main(void)
 {
-
-  /* USER CODE BEGIN 1 */
-
-  /* USER CODE END 1 */
-
-  /* MCU Configuration--------------------------------------------------------*/
-
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
-
-  /* USER CODE BEGIN Init */
-
-  /* USER CODE END Init */
-
-  /* Configure the system clock */
   SystemClock_Config();
-
-  /* USER CODE BEGIN SysInit */
-
-  /* USER CODE END SysInit */
-
-  /* Initialize all configured peripherals */
+	
   MX_GPIO_Init();
   MX_ADC_Init();
   MX_TIM2_Init();
   MX_I2C1_Init();
   MX_USART1_UART_Init();
-  /* USER CODE BEGIN 2 */
+  
   HAL_UART_Receive_IT(&huart1, (uint8_t *)&rxChar, 1);
 
   dht11_sensor.DHT_Port = GPIOA;
@@ -195,43 +120,36 @@ int main(void)
 
   HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
 
-  /* USER CODE END 2 */
-
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
   while (1)
   {
-    /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
-	  ir_value = readIR();
-	  sensor_data = DHT_getData(&dht11_sensor);
-
-	  sprintf(temp_data_on, "ON - TEMP: %d C", (int)sensor_data.temp);
-	  sprintf(temp_data_off, "OFF - TEMP: %d C", (int)sensor_data.temp);
-
-
-	  if(systemMode == 0){
-		  if(sensor_data.temp >= 27){
+	 ir_value = readIR();
+	 sensor_data = DHT_getData(&dht11_sensor);
+			
+	 sprintf(temp_data_on, "ON - TEMP: %d C", (int)sensor_data.temp);
+	 sprintf(temp_data_off, "OFF - TEMP: %d C", (int)sensor_data.temp);
+			
+			
+		  if(systemMode == 0){
+			if(sensor_data.temp >= 27){
 			  __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, 500);
 			  lcd_clear(&lcd);
 			  lcd_puts(&lcd, temp_data_on);
-		  }else{
-			  __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, 0);
+		        }else{
+ 			  __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, 0);
 			  lcd_clear(&lcd);
 			  lcd_puts(&lcd, temp_data_off);
-		  }
-
-		  if(ir_value <= 1500){
-			  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_SET);
-			  lcd_gotoxy(&lcd, 0, 1);
-			  lcd_puts(&lcd, "ON - MOTION: YES");
-		  }else{
-			  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_RESET);
-			  lcd_gotoxy(&lcd, 0, 1);
-			  lcd_puts(&lcd, "OFF - MOTION: NO");
-		   }
-	  	}
+		 	}
+			
+			 if(ir_value <= 1500){
+			   HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_SET);
+			   lcd_gotoxy(&lcd, 0, 1);
+			   lcd_puts(&lcd, "ON - MOTION: YES");
+			  }else{
+			    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_RESET);
+			    lcd_gotoxy(&lcd, 0, 1);
+			    lcd_puts(&lcd, "OFF - MOTION: NO");
+				}
+		  	}
 
 	  else if(systemMode == 1){
 
@@ -274,16 +192,10 @@ int main(void)
 			  lcd_gotoxy(&lcd, 0, 1);
 			  lcd_puts(&lcd, "LED ON           ");
 		  }
-	   }
-
+	     }
 	 }
-  /* USER CODE END 3 */
 }
 
-/**
-  * @brief System Clock Configuration
-  * @retval None
-  */
 void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
@@ -328,23 +240,9 @@ void SystemClock_Config(void)
   }
 }
 
-/**
-  * @brief ADC Initialization Function
-  * @param None
-  * @retval None
-  */
 static void MX_ADC_Init(void)
 {
-
-  /* USER CODE BEGIN ADC_Init 0 */
-
-  /* USER CODE END ADC_Init 0 */
-
   ADC_ChannelConfTypeDef sConfig = {0};
-
-  /* USER CODE BEGIN ADC_Init 1 */
-
-  /* USER CODE END ADC_Init 1 */
 
   /** Configure the global features of the ADC (Clock, Resolution, Data Alignment and number of conversion)
   */
@@ -376,27 +274,11 @@ static void MX_ADC_Init(void)
   {
     Error_Handler();
   }
-  /* USER CODE BEGIN ADC_Init 2 */
-
-  /* USER CODE END ADC_Init 2 */
-
 }
 
-/**
-  * @brief I2C1 Initialization Function
-  * @param None
-  * @retval None
-  */
 static void MX_I2C1_Init(void)
 {
 
-  /* USER CODE BEGIN I2C1_Init 0 */
-
-  /* USER CODE END I2C1_Init 0 */
-
-  /* USER CODE BEGIN I2C1_Init 1 */
-
-  /* USER CODE END I2C1_Init 1 */
   hi2c1.Instance = I2C1;
   hi2c1.Init.Timing = 0x00201D2B;
   hi2c1.Init.OwnAddress1 = 0;
@@ -424,31 +306,14 @@ static void MX_I2C1_Init(void)
   {
     Error_Handler();
   }
-  /* USER CODE BEGIN I2C1_Init 2 */
-
-  /* USER CODE END I2C1_Init 2 */
-
 }
 
-/**
-  * @brief TIM2 Initialization Function
-  * @param None
-  * @retval None
-  */
 static void MX_TIM2_Init(void)
 {
-
-  /* USER CODE BEGIN TIM2_Init 0 */
-
-  /* USER CODE END TIM2_Init 0 */
-
   TIM_ClockConfigTypeDef sClockSourceConfig = {0};
   TIM_MasterConfigTypeDef sMasterConfig = {0};
   TIM_OC_InitTypeDef sConfigOC = {0};
 
-  /* USER CODE BEGIN TIM2_Init 1 */
-
-  /* USER CODE END TIM2_Init 1 */
   htim2.Instance = TIM2;
   htim2.Init.Prescaler = 48-1;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
@@ -482,28 +347,13 @@ static void MX_TIM2_Init(void)
   {
     Error_Handler();
   }
-  /* USER CODE BEGIN TIM2_Init 2 */
 
-  /* USER CODE END TIM2_Init 2 */
   HAL_TIM_MspPostInit(&htim2);
 
 }
 
-/**
-  * @brief USART1 Initialization Function
-  * @param None
-  * @retval None
-  */
 static void MX_USART1_UART_Init(void)
 {
-
-  /* USER CODE BEGIN USART1_Init 0 */
-
-  /* USER CODE END USART1_Init 0 */
-
-  /* USER CODE BEGIN USART1_Init 1 */
-
-  /* USER CODE END USART1_Init 1 */
   huart1.Instance = USART1;
   huart1.Init.BaudRate = 9600;
   huart1.Init.WordLength = UART_WORDLENGTH_8B;
@@ -518,23 +368,12 @@ static void MX_USART1_UART_Init(void)
   {
     Error_Handler();
   }
-  /* USER CODE BEGIN USART1_Init 2 */
-
-  /* USER CODE END USART1_Init 2 */
-
+  
 }
 
-/**
-  * @brief GPIO Initialization Function
-  * @param None
-  * @retval None
-  */
 static void MX_GPIO_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
-  /* USER CODE BEGIN MX_GPIO_Init_1 */
-
-  /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOF_CLK_ENABLE();
@@ -572,23 +411,9 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /* USER CODE BEGIN MX_GPIO_Init_2 */
-
-  /* USER CODE END MX_GPIO_Init_2 */
 }
-
-/* USER CODE BEGIN 4 */
-
-/* USER CODE END 4 */
-
-/**
-  * @brief  This function is executed in case of error occurrence.
-  * @retval None
-  */
 void Error_Handler(void)
 {
-  /* USER CODE BEGIN Error_Handler_Debug */
-  /* User can add his own implementation to report the HAL error return state */
   __disable_irq();
   while (1)
   {
