@@ -48,6 +48,24 @@ Jumper Cables
   LED OFF -> The LED turns off.
 
 All of the stages display in the LCD screen.
+ <img src="https://raw.githubusercontent.com/ssenanb/Environment-Reaction-System/main/configuration.png" alt="System Configuration" width="500"/>
 
 Figure 1 : System photo
+
+<img src="https://raw.github.com/ssenanb/UART-Supported-Environment-Control/blob/main/system_installation.jpeg" alt="System Configuration" width="500"/>
+
+Figure 2 : Automatic Mode
+
+<img src="https://raw.github.com/ssenanb/UART-Supported-Environment-Control/blob/main/auto_mode.jpeg" alt="Auto Mode" width="500"/>
+
+Figure 3 : Manuel Mode
+
+<img src="https://raw.github.com/ssenanb/UART-Supported-Environment-Control/blob/main/manuel_mode.jpeg" alt="Manuel Mode" width="500"/>
+
+Fİgure 4 : In the Termite
+
+<img src="https://github.com/ssenanb/UART-Supported-Environment-Control/blob/main/termite_display.png" alt="Termite" width="500"/>
+
+
+
 
