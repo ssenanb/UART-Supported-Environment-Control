@@ -3,6 +3,13 @@
 
 This project monitors the environment by collecting data from temperature and motion sensors. Based on the collected data, it controls a fan (DC motor with a propeller) and the brightness of an LED. The system supports both manual and automatic operation modes. It can be manually controlled via UART and displays its current status on an LCD screen.
 
+## Software Architecture
+
+- The system is structured as a finite state machine with two modes: `AUTO` and `MANUAL`.
+- UART commands are parsed using interrupt-based reception.
+- PWM signal is generated for motor speed control using Timer 2 Channel 2.
+- LCD updates are handled periodically via polling.
+
 ## Compenents Used
 
 STM32FODISC
