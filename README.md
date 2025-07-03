@@ -5,7 +5,7 @@ This project monitors the environment by collecting data from temperature and mo
 
 ## Software Architecture
 
-- The system is structured as a finite state machine with two modes: `AUTO` and `MANUAL`.
+- The system is structured as two modes: `AUTO` and `MANUAL`.
 - UART commands are parsed using interrupt-based reception.
 - PWM signal is generated for motor speed control using Timer 2 Channel 2.
 - LCD updates are handled periodically via polling.
