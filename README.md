@@ -40,19 +40,19 @@ Jumper Cables
 
 * Automatic Mode : If the temperature is higher than the threshold, the fan turns on and if the distance is smaller than the threshold, the LED turns on. All of the status display in the LCD screen.
   
-* Manual Mode : If you send the 'MANUAL' command via UART, the system switches to manual mode. All of the command in the below :
+* Manual Mode : If you send the `MANUAL` command via UART, the system switches to manual mode. All of the command in the below :
 
-  AUTO -> The system switches to automatic mode again. (Auto Mode' is printed to the Termite terminal via UART.)
+  `AUTO` -> The system switches to automatic mode again. (Auto Mode' is printed to the Termite terminal via UART.)
   
-  MANUAL -> The system switches to manual mode. (Manual Mode' is printed to the Termite terminal via UART)
+  `MANUAL` -> The system switches to manual mode. (Manual Mode' is printed to the Termite terminal via UART)
 
-  FAN ON -> The fan turns on.
+  `FAN ON` -> The fan turns on.
 
-  FAN OFF -> The fan turns off.
+  `FAN OFF` -> The fan turns off.
 
-  LED ON -> The LED turns on.
+  `LED ON` -> The LED turns on.
 
-  LED OFF -> The LED turns off.
+  `LED OFF` -> The LED turns off.
 
 All of the stages display in the LCD screen.
 
