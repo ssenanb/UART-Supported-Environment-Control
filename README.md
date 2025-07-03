@@ -10,7 +10,7 @@ This project monitors the environment by collecting data from temperature and mo
 - PWM signal is generated for motor speed control using Timer 2 Channel 2.
 - LCD updates are handled periodically via polling.
 
-## Compenents Used
+## Components Used
 
 STM32FODISC
 
