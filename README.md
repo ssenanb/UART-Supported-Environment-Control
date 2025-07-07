@@ -58,7 +58,7 @@ All of the stages display in the LCD screen.
 
 Figure 1 : System Overview
 
-<img src="https://github.com/ssenanb/UART-Supported-Environment-Control/blob/main/system_installation.jpeg" alt="System Configuration" width="500"/>
+<img src="https://github.com/ssenanb/UART-Supported-Environment-Control/blob/main/system_installation.jpeg" alt="System Overview" width="500"/>
 
 Figure 2 : Automatic Mode
 
